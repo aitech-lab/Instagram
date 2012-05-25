@@ -1,0 +1,15 @@
+fs2: 4bd168d977b29c74288d8c82
+
+CLIENT ID		91d827904e3c452aab4936d9658b88fd
+CLIENT SECRET	980e61f2aa7949d5a83e599e5d628863
+WEBSITE URL		http://lab.ailove.ru
+REDIRECT URI	http://lab.ailove.ru/instagram
+
+?client_id=91d827904e3c452aab4936d9658b88fd
+      
+"latitude": 55.727686,
+"id": "1399341",
+"longitude": 37.607007,
+"name": "Ailove office / офис Айлав"
+
+https://api.instagram.com/v1/locations/1399341/media/recent?client_id=91d827904e3c452aab4936d9658b88fd
