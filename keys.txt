@@ -13,3 +13,7 @@ REDIRECT URI	http://lab.ailove.ru/instagram
 "name": "Ailove office / офис Айлав"
 
 https://api.instagram.com/v1/locations/1399341/media/recent?client_id=91d827904e3c452aab4936d9658b88fd
+https://api.instagram.com/v1/locations/search?distance=2000&foursquare_id=&foursquare_v2_id=&lat=55.727686&lng=37.607007&client_id=91d827904e3c452aab4936d9658b88fd
+https://api.instagram.com/v1/media/search?distance=1000&lat=55.727686&lng=37.607007&max_timestamp=&min_timestamp=&client_id=91d827904e3c452aab4936d9658b88fd
+https://api.instagram.com/v1/media/search?client_id=91d827904e3c452aab4936d9658b88fd&distance=1000&lat=55.727686&lng=37.607007
+curl.exe -k -d "client_id=91d827904e3c452aab4936d9658b88fd&distance=1000&lat=55.727686&lng=37.607007&max_timestamp=&min_timestamp=" https://api.instagram.com/v1/media/search
