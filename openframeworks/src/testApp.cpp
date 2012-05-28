@@ -9,7 +9,7 @@ void testApp::setup(){
 	// string url = "\"https://api.instagram.com/v1/locations/1399341/media/recent?max_id=177897742881064387_4234416&client_id=91d827904e3c452aab4936d9658b88fd\"";
 	// string url = "\"https://api.instagram.com/v1/locations/1399341/media/recent?max_id=148506543753856562_4234416&client_id=91d827904e3c452aab4936d9658b88fd\"";
 	// 55.037826 36.748619
-	// string url = "\"https://api.instagram.com/v1/media/search?distance=1000&lat=55.727686&lng=37.607007&client_id=91d827904e3c452aab4936d9658b88fd\"";
+	// string url = "\"https://api.instagram.com/v1/media/search?distance=100&lat=55.727686&lng=37.607007&client_id=91d827904e3c452aab4936d9658b88fd\"";
 	// string url = "\"https://api.instagram.com/v1/media/search?distance=1000&lat=55.037826&lng=36.748619&client_id=91d827904e3c452aab4936d9658b88fd\"";
 	// string url = "\"https://api.instagram.com/v1/tags/cat/media/recent?client_id=91d827904e3c452aab4936d9658b88fd\"";
 	instagram.jsonsToDownload.push(url);
@@ -24,8 +24,10 @@ void testApp::update() {
 
 //--------------------------------------------------------------
 void testApp::draw() {	
+	int xc = ofGetWidth() / 150; 
 	for (int i = 0; i<instagram.images.size(); i++) {
-		if(instagram.images[i]->image.isAllocated()) instagram.images[i]->image.draw(i%10*150, i/10*150);
+
+		if(instagram.images[i]->image.isAllocated()) instagram.images[i]->image.draw(i % xc * 151, i/xc*151);
 	}
 }
 

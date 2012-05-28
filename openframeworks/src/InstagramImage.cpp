@@ -8,6 +8,7 @@ InstagramImage::InstagramImage(void) {
 }
 
 InstagramImage::InstagramImage(const ofxJSONElement& json) {
+	id++;
 	setJson(json);
 }
 

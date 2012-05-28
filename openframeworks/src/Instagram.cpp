@@ -30,14 +30,15 @@ void Instagram::threadedFunction() {
 				//cout << result.getRawString() << endl;
 				for (int i=0; i<json["data"].size(); i++){
 					images.push_back(new InstagramImage(json["data"][i]));
-					
-					//Sleep(100);
 				}
-				cout << json["pagination"]["next_url"].asString() << "\n";
-				if(InstagramImage::id <100) jsonsToDownload.push("\""+json["pagination"]["next_url"].asString()+"\"");
+				cout << json["pagination"]["next_url"].asString() << InstagramImage::id <<"\n";
+				if(!json["pagination"].empty()) {
+					if(InstagramImage::id < 60) 
+						jsonsToDownload.push("\""+json["pagination"]["next_url"].asString()+"\"");
+				}
 			}
 		} 
-		Sleep(500);
+		//Sleep(500);
     }
  
 }
