@@ -23,7 +23,6 @@ class testApp : public ofBaseApp {
 		void windowResized(int w, int h);
 		
 		Instagram instagram;
-		vector<ofPtr <ofImage> > images;
 
 	
 };

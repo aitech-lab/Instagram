@@ -5,6 +5,12 @@ Instagram::Instagram(void) {
 
 
 Instagram::~Instagram(void) {
+	for (int i=0; i<images.size(); i++) delete images[i];
+	images.clear();
+}
+
+void Instagram::update() {
+	InstagramImage::update();
 }
 
 // the thread function
@@ -14,37 +20,23 @@ void Instagram::threadedFunction() {
 		
 		if (jsonsToDownload.size()) {
 			string file = "response-"+ofGetTimestampString()+".json"; 
-			string cmd  = "curl.exe -k "+jsonsToDownload.front()+" -o \""+"data\\"+file+"\"";
+			string cmd  = "curl.exe -k "+jsonsToDownload.front()+" -o \""+"data\\instagram-cache\\"+file+"\"";
 			system(cmd.c_str());
 			jsonsToDownload.pop();
-			status = INSTAGRAM_JSON_DOWNLOAD_COMPLET;
+
 			ofxJSONElement json;
-			bool parsingSuccessful = json.openLocal(file);
+			bool parsingSuccessful = json.openLocal("instagram-cache\\"+file);
 			if ( parsingSuccessful ) {
 				//cout << result.getRawString() << endl;
 				for (int i=0; i<json["data"].size(); i++){
-					string url = json["data"][i]["images"]["thumbnail"]["url"].asString();
-					cout << url << "\n";
-					imagesToDownload.push(url);
+					images.push_back(new InstagramImage(json["data"][i]));
+					
+					//Sleep(100);
 				}
+				cout << json["pagination"]["next_url"].asString() << "\n";
+				if(InstagramImage::id <100) jsonsToDownload.push("\""+json["pagination"]["next_url"].asString()+"\"");
 			}
-
-		} else if(imagesToDownload.size()) {
-			string url  = imagesToDownload.front();
-			string file = url.substr(url.find_last_of("/")+1);
-			FILE *fp = fopen(("data\\"+file).c_str(),"r");
-			if(!fp) {
-				string cmd  = "curl.exe -k "+url+" -o "+"data\\"+file;
-				cout << cmd <<"\n";
-				system(cmd.c_str());
-			} else fclose(fp);
-			imagesToDownload.pop();
-			downloadedImages.push_back(file);
-		} else {
-			status = INSTAGRAM_IMAGES_DOWNLOAD_COMPLETE;
-			stopThread(true);
-		}
-
+		} 
 		Sleep(500);
     }
  

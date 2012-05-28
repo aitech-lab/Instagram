@@ -1,30 +1,25 @@
-#pragma once
+#ifndef _INSTAGRAM_
+#define _INSTAGRAM_
 
 #include "ofMain.h"
 #include <queue>
 #include "ofxJSONElement.h"
+#include "InstagramImage.h"
 
-enum Status{
-	INSTAGRAM_JSON_DOWNLOAD_COMPLET = 10,
-	INSTAGRAM_IMAGES_DOWNLOAD_COMPLETE,
-};
-
-class Instagram :
-	public ofThread
-{
+class Instagram : public ofThread {
 public:
 	
 	Instagram(void);
 	~Instagram(void);
 
 	void threadedFunction();
+	void update();
 
-	Status status;
 	queue<string> imagesToDownload;
 	queue<string>  jsonsToDownload;
 
-	vector<string> downloadedImages;
-
+	vector<InstagramImage*> images;
 	
 };
 
+#endif
