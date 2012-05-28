@@ -16,6 +16,7 @@
       <Filter>ofxJSON</Filter>
     </ClCompile>
     <ClCompile Include="src\Instagram.cpp" />
+    <ClCompile Include="src\InstagramImage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\testApp.h" />
@@ -26,6 +27,7 @@
       <Filter>ofxJSON</Filter>
     </ClInclude>
     <ClInclude Include="src\Instagram.h" />
+    <ClInclude Include="src\InstagramImage.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ofxJSON">
