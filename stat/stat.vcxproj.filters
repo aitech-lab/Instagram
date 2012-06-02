@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\testApp.cpp" />
+    <ClCompile Include="src\ofxJSON\src\ofxJSONElement.cpp">
+      <Filter>ofxJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofxJSON\lib\src\lib_json\json_reader.cpp">
+      <Filter>ofxJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofxJSON\lib\src\lib_json\json_value.cpp">
+      <Filter>ofxJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofxJSON\lib\src\lib_json\json_writer.cpp">
+      <Filter>ofxJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Instagram.cpp" />
+    <ClCompile Include="src\InstagramImage.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\testApp.h" />
+    <ClInclude Include="src\ofxJSON\src\ofxJSONElement.h">
+      <Filter>ofxJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofxJSON\lib\src\lib_json\json_batchallocator.h">
+      <Filter>ofxJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Instagram.h" />
+    <ClInclude Include="src\InstagramImage.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ofxJSON">
+      <UniqueIdentifier>{81c0b76a-640a-4cbc-b4a0-b1776327d3fb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\ofxJSON\lib\src\lib_json\json_valueiterator.inl">
+      <Filter>ofxJSON</Filter>
+    </None>
+    <None Include="src\ofxJSON\lib\src\lib_json\json_internalarray.inl">
+      <Filter>ofxJSON</Filter>
+    </None>
+    <None Include="src\ofxJSON\lib\src\lib_json\json_internalmap.inl">
+      <Filter>ofxJSON</Filter>
+    </None>
+  </ItemGroup>
+</Project>
