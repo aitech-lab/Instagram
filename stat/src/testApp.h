@@ -22,6 +22,10 @@ class testApp : public ofBaseApp {
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
 		
+		double lat;
+		double lng;
+		unsigned int max_timestamp;
+		unsigned int min_timestamp;
 		Instagram instagram;
 
 	

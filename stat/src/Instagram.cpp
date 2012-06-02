@@ -1,16 +1,15 @@
 #include "Instagram.h"
 
-Instagram::Instagram(void) {
+Instagram::Instagram(void):
+	parseComplete(false) {
 }
 
 
 Instagram::~Instagram(void) {
-	for (int i=0; i<images.size(); i++) delete images[i];
-	images.clear();
 }
 
 void Instagram::update() {
-	InstagramImage::update();
+
 }
 
 // the thread function
@@ -19,26 +18,31 @@ void Instagram::threadedFunction() {
     while(isThreadRunning()) {
 		
 		if (jsonsToDownload.size()) {
+			parseComplete = false;
 			string file = "response-"+ofGetTimestampString()+".json"; 
-			string cmd  = "curl.exe -k "+jsonsToDownload.front()+" -o \""+"data\\instagram-cache\\"+file+"\"";
-			system(cmd.c_str());
-			jsonsToDownload.pop();
+			string cmd  = "curl.exe -k \""+jsonsToDownload.front()+
+				"&max_timestamp="+ofToString(max_timestamp)+
+				"&min_timestamp="+ofToString(max_timestamp-60)+
+				"\" -o \""+"data\\instagram-cache\\"+file+"\"";
+			// jsonsToDownload.pop();
 
+			system(cmd.c_str());
+			
 			ofxJSONElement json;
-			bool parsingSuccessful = json.openLocal("instagram-cache\\"+file);
-			if ( parsingSuccessful ) {
-				//cout << result.getRawString() << endl;
-				for (int i=0; i<json["data"].size(); i++){
-					images.push_back(new InstagramImage(json["data"][i]));
+			
+			if ( json.openLocal("instagram-cache\\"+file)) {
+				min_timestamp = max_timestamp;
+				for (int i=0; i<json["data"].size(); i++) {
+					unsigned int timestamp = ofToInt(json["data"][i]["created_time"].asString());
+					if(timestamp< min_timestamp) min_timestamp = timestamp;
+					images.push_back(ofxJSONElement(json["data"][i]));
 				}
-				cout << json["pagination"]["next_url"].asString() << InstagramImage::id <<"\n";
-				if(!json["pagination"].empty()) {
-					if(InstagramImage::id < 60) 
-						jsonsToDownload.push("\""+json["pagination"]["next_url"].asString()+"\"");
-				}
+				parseComplete = true;
+				Sleep(1000);
+				max_timestamp = min_timestamp;
 			}
 		} 
-		//Sleep(500);
+		Sleep(500);
     }
  
 }

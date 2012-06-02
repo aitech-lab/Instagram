@@ -15,10 +15,13 @@ public:
 	void threadedFunction();
 	void update();
 
-	queue<string> imagesToDownload;
 	queue<string>  jsonsToDownload;
+	bool parseComplete;
+	vector<ofxJSONElement> images;
 
-	vector<InstagramImage*> images;
+	unsigned int max_timestamp;
+	unsigned int min_timestamp;
+	
 	
 };
 

@@ -117,7 +117,6 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Instagram.cpp" />
-    <ClCompile Include="src\InstagramImage.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofxJSON\lib\src\lib_json\json_reader.cpp" />
     <ClCompile Include="src\ofxJSON\lib\src\lib_json\json_value.cpp" />
@@ -127,7 +126,6 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Instagram.h" />
-    <ClInclude Include="src\InstagramImage.h" />
     <ClInclude Include="src\ofxJSON\lib\src\lib_json\json_batchallocator.h" />
     <ClInclude Include="src\ofxJSON\src\ofxJSONElement.h" />
     <ClInclude Include="src\testApp.h" />
