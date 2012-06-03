@@ -20,7 +20,7 @@ void testApp::setup(){
 	lat = 55.751943;
 	lng = 37.617123;
 	string url = "https://api.instagram.com/v1/media/search"
-		"?distance=20000"
+		"?distance=100000"
 		"&lat="+ofToString(lat)+
 		"&lng="+ofToString(lng)+
 		"&client_id=91d827904e3c452aab4936d9658b88fd";
@@ -29,6 +29,7 @@ void testApp::setup(){
 	instagram.max_timestamp = ofGetUnixTime();
 	instagram.jsonsToDownload.push(url);
 	instagram.startThread(true, true);
+	ofSetFrameRate(1);
 }
 
 

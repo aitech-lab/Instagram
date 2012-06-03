@@ -21,6 +21,8 @@ public:
 
 	unsigned int max_timestamp;
 	unsigned int min_timestamp;
+
+	ofFile file;
 	
 	
 };
