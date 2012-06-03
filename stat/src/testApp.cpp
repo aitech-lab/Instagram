@@ -17,8 +17,17 @@ void testApp::setup(){
 	// lng: 37.296135 38.031335 
 	// lat: 55.503198 55.941715
 
+
+	// max search distnace = 4km
+	//     lat              lng
+	// max 55.769832611	max 37.64886856	
+	// min 55.735256195	min 37.58532000	
+	// dif 00.034576416 dif 00.06354856     
+	
 	lat = 55.751943;
 	lng = 37.617123;
+
+
 	string url = "https://api.instagram.com/v1/media/search"
 		"?distance=100000"
 		"&lat="+ofToString(lat)+
