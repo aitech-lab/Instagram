@@ -5,7 +5,7 @@
 void testApp::setup(){
 	ofSetWindowTitle("Ailove-Instagram");
 	ofBackground(0);
-	string url = "https://api.instagram.com/v1/locations/1399341/media/recent?client_id=91d827904e3c452aab4936d9658b88fd";
+	string url = "https://api.instagram.com/v1/locations/1399341/media/recent?client_id=6f3a4f4174774f5da4380a481299a995";
 	// string url = "\"https://api.instagram.com/v1/locations/1399341/media/recent?max_id=177897742881064387_4234416&client_id=91d827904e3c452aab4936d9658b88fd\"";
 	// string url = "\"https://api.instagram.com/v1/locations/1399341/media/recent?max_id=148506543753856562_4234416&client_id=91d827904e3c452aab4936d9658b88fd\"";
 	// 55.037826 36.748619

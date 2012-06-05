@@ -3,7 +3,10 @@ Ailove-Instagram
 
 Openframeworks and Instagram integration.
 
+
 <img src="https://github.com/ailove-lab/Ailove-Instagram/blob/master/screenshot.png?raw=true"/>
+
+<img src="https://github.com/ailove-lab/Ailove-Instagram/blob/master/of-stat.png?raw=true"/>
 
 <img src="https://github.com/ailove-lab/Ailove-Instagram/blob/master/statistics.png?raw=true"/>
 

@@ -3,8 +3,7 @@
 
 
 #include "ofMain.h"
-#include "Instagram.h"
-
+#include "FractalTriangle.h"
 
 class testApp : public ofBaseApp {
 	
@@ -21,12 +20,24 @@ class testApp : public ofBaseApp {
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
+		void exit();
 		
-		double lat;
-		double lng;
-		unsigned int max_timestamp;
-		unsigned int min_timestamp;
-		Instagram instagram;
+		double min_lat;
+		double min_lng;
+		double max_lat;
+		double max_lng;
+
+		vector<ofPoint> points;
+		ofImage img;
+
+		bool getIntegralFromTriangle(FractalTriangle& t);
+		void splitTriangles(FractalTriangle& t);
+		void drawTriangles(FractalTriangle& t);
+
+		vector<FractalTriangle> triangles;
+
+		FractalTriangle* triangle;
+		unsigned int depth;
 
 	
 };

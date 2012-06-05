@@ -116,18 +116,12 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Instagram.cpp" />
+    <ClCompile Include="src\FractalTriangle.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\ofxJSON\lib\src\lib_json\json_reader.cpp" />
-    <ClCompile Include="src\ofxJSON\lib\src\lib_json\json_value.cpp" />
-    <ClCompile Include="src\ofxJSON\lib\src\lib_json\json_writer.cpp" />
-    <ClCompile Include="src\ofxJSON\src\ofxJSONElement.cpp" />
     <ClCompile Include="src\testApp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Instagram.h" />
-    <ClInclude Include="src\ofxJSON\lib\src\lib_json\json_batchallocator.h" />
-    <ClInclude Include="src\ofxJSON\src\ofxJSONElement.h" />
+    <ClInclude Include="src\FractalTriangle.h" />
     <ClInclude Include="src\testApp.h" />
   </ItemGroup>
   <ItemGroup>
@@ -135,11 +129,6 @@ if not exist "$(ProjectDir)\bin\data" mkdir  "$(ProjectDir)\bin\data"
       <Project>{5837595d-aca9-485c-8e76-729040ce4b0b}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\ofxJSON\lib\src\lib_json\json_internalarray.inl" />
-    <None Include="src\ofxJSON\lib\src\lib_json\json_internalmap.inl" />
-    <None Include="src\ofxJSON\lib\src\lib_json\json_valueiterator.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

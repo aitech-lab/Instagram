@@ -5,22 +5,24 @@ import simplejson as json
 
 # lat 00.034576416 lng 00.06354856  
 
-id1 = "91d827904e3c452aab4936d9658b88fd"
-id2 = "6f3a4f4174774f5da4380a481299a995"
-id3 = "aff8d45d9e3644839000588e5ac4778b"
+id1 = "6f3a4f4174774f5da4380a481299a995"
+id2 = "aff8d45d9e3644839000588e5ac4778b"
+id3 = "ed5e6ed4df0349e584dcae51a46e42c5"
+id4 = "5a7e84c2f0ad4082a2cdfcecaec1e180"
+id5 = "dd341ab36cf04f36af9849113b6d1365"
 
 distance  = "5000"
 
 f = open('out.csv', 'w')
 f.write("latitude, longitude,timestamp, id\n")
 t = round(time.time()/60)*60
-step = 60*10
+step = 60*5
 
 threadLock = thread.allocate_lock()
 
 def grabPiceOfInstagram(lat, lng, client_id, thr) :
 	c=0
-	while (c<2000) : 
+	while (c<288) : # 144 = 1 day step 10 min 
 		min_timestamp = t-(c+1)*step
 		max_timestamp = t- c   *step
 
@@ -59,11 +61,11 @@ try:
 	
 	thread.start_new_thread( grabPiceOfInstagram, ("55.7173666", "37.6171230",id2, "thr4" ) )
 	thread.start_new_thread( grabPiceOfInstagram, ("55.7519430", "37.6171230",id2, "thr5" ) )
-	thread.start_new_thread( grabPiceOfInstagram, ("55.7865194", "37.6171230",id2, "thr6" ) )
+	thread.start_new_thread( grabPiceOfInstagram, ("55.7865194", "37.6171230",id2, "thr1" ) )
 	
-	thread.start_new_thread( grabPiceOfInstagram, ("55.7173666", "37.6806716",id3, "thr7" ) )
-	thread.start_new_thread( grabPiceOfInstagram, ("55.7519430", "37.6806716",id3, "thr8" ) )
-	thread.start_new_thread( grabPiceOfInstagram, ("55.7865194", "37.6806716",id3, "thr9" ) )
+	thread.start_new_thread( grabPiceOfInstagram, ("55.7173666", "37.6806716",id3, "thr2" ) )
+	thread.start_new_thread( grabPiceOfInstagram, ("55.7519430", "37.6806716",id3, "thr3" ) )
+	thread.start_new_thread( grabPiceOfInstagram, ("55.7865194", "37.6806716",id3, "thr4" ) )
 except:
 	print "Error: unable to start thread"
 while 1 :
