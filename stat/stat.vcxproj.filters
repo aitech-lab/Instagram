@@ -3,10 +3,42 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\testApp.cpp" />
-    <ClCompile Include="src\FractalTriangle.cpp" />
+    <ClCompile Include="src\ofxJSON\src\ofxJSONElement.cpp">
+      <Filter>ofxJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofxJSON\lib\src\lib_json\json_reader.cpp">
+      <Filter>ofxJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofxJSON\lib\src\lib_json\json_value.cpp">
+      <Filter>ofxJSON</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ofxJSON\lib\src\lib_json\json_writer.cpp">
+      <Filter>ofxJSON</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\testApp.h" />
-    <ClInclude Include="src\FractalTriangle.h" />
+    <ClInclude Include="src\ofxJSON\src\ofxJSONElement.h">
+      <Filter>ofxJSON</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofxJSON\lib\src\lib_json\json_batchallocator.h">
+      <Filter>ofxJSON</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ofxJSON">
+      <UniqueIdentifier>{1ab0df7c-2fd2-4092-8db8-1c7fd2f7c3fb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\ofxJSON\lib\src\lib_json\json_internalarray.inl">
+      <Filter>ofxJSON</Filter>
+    </None>
+    <None Include="src\ofxJSON\lib\src\lib_json\json_internalmap.inl">
+      <Filter>ofxJSON</Filter>
+    </None>
+    <None Include="src\ofxJSON\lib\src\lib_json\json_valueiterator.inl">
+      <Filter>ofxJSON</Filter>
+    </None>
   </ItemGroup>
 </Project>

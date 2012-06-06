@@ -6,8 +6,6 @@ void testApp::setup(){
 	ofSetWindowTitle("Ailove-Instagram-Stat");
 	ofBackground(0);
 
-	depth = 8;
-
 	min_lat = 1e8;
 	min_lng = 1e8;
 	max_lat =-1e8;
@@ -59,85 +57,75 @@ void testApp::setup(){
 	}
 
 	img.update();
+	
+	
+	splitRect(ofRectangle(0,0,4095,4095));
+	
+	/*	
+	json["type"]="FeatureCollection";
 
-	float cx = img.width /2;
-	float cy = img.height/2;
-	float r = max(cx,cy)*4;
-	float a = 3.141592654/6;
-	float x1 = cx+r*sin(a+1*3.1415926*2/3); float y1 = cx+r*cos(a+1*3.1415926*2/3);
-	float x2 = cx+r*sin(a+2*3.1415926*2/3); float y2 = cx+r*cos(a+2*3.1415926*2/3);
-	float x3 = cx+r*sin(a+3*3.1415926*2/3); float y3 = cx+r*cos(a+3*3.1415926*2/3);
-	triangle = new FractalTriangle(x1, y1, x2, y2, x3, y3);
-	splitTriangles(*triangle);
+	for(int i=0; i<rects.size(); i++) {
+		// { "type"      : "Feature", 
+		//   "id"        : 0, 
+		//   "properties": { "longitude"  : 37.486007, 
+		//                   "latitude"   : 55.677358 }, 
+		//   "geometry"  : { "type"       : "Polygon", 
+		//                   "coordinates": [ [ [ 37.486007, 55.677358 ], 
+		//                                      [ 37.484710, 55.676092 ], 
+		//                                      [ 37.482117, 55.676092 ], 
+		//                                      [ 37.480821, 55.677358 ], 
+		//                                      [ 37.482117, 55.678624 ], 
+		//                                      [ 37.484710, 55.678624 ], 
+		//                                      [ 37.486007, 55.677358 ] ] ] } }
+		json["features"][i]["type"] = "Feature";
+		json["features"][i]["id"  ] = i;
+
+		json["features"][i]["properties"]["longitude"] = min_lng+(rects[i].y+rects[i].height/2)/lng_s;
+		json["features"][i]["properties"]["latitude" ] = min_lat+(rects[i].x+rects[i].width /2)/lat_s;
+		json["features"][i]["properties"]["count"    ] = integrals[i];
+
+
+		json["features"][i]["geometry"]["type"] = "Polygon";
+		json["features"][i]["geometry"]["coordinates"] = ofxJSONElement("[ [ [ "+
+			ofToString(min_lng+ rects[i].y                 /lng_s)+ ","+
+			ofToString(min_lat+ rects[i].x                 /lat_s)+"],["+
+			ofToString(min_lng+ rects[i].y                 /lng_s)+ ","+
+			ofToString(min_lat+(rects[i].x+rects[i].width )/lat_s)+"],["+
+			ofToString(min_lng+(rects[i].y+rects[i].height)/lng_s)+ ","+
+			ofToString(min_lat+(rects[i].x+rects[i].width )/lat_s)+"],["+
+			ofToString(min_lng+(rects[i].y+rects[i].height)/lng_s)+ ","+
+			ofToString(min_lat+ rects[i].x                 /lat_s)+
+			"] ] ]");
+	}
+	json.save("stat.geojson");
+	*/
 
 }
 
+void testApp::splitRect(ofRectangle r) {
+	static char min = 4;
+	int size = r.width/2;
+	static unsigned int* p = (unsigned int*)img.getPixels();
+	if( r.width < min) return;
+	int x1, x2, x3, y1, y2, y3;
+	x1 = r.x; x2= r.x+size, x3 = r.x+size*2;
+	y1 = r.y; y2= r.y+size, y3 = r.y+size*2;
 
-void testApp::splitTriangles(FractalTriangle& t) {
-	
-	unsigned static int w = img.width;
-	unsigned static int h = img.height;
-	unsigned static char* pixels = img.getPixels();
-
-	if(t.l < depth) {
-		t.split();
-		getIntegralFromTriangle(*t.t1);
-		getIntegralFromTriangle(*t.t2);
-		getIntegralFromTriangle(*t.t3);
-		getIntegralFromTriangle(*t.t4);
-
-		splitTriangles(*t.t1);
-		splitTriangles(*t.t2);
-		splitTriangles(*t.t3);
-		splitTriangles(*t.t4);
-
-	} else {
-		if (t.hasIntegral) triangles.push_back(t);
-	}
-}
-
-bool testApp::getIntegralFromTriangle(FractalTriangle& t) {
-	
-	unsigned int* pixels = (unsigned int*) img.getPixels();
-
-	int minx = (int)min(t.x1, min(t.x2, t.x3));
-	int miny = (int)min(t.y1, min(t.y2, t.y3));
-	int maxx = (int)max(t.x1, max(t.x2, t.x3));
-	int maxy = (int)max(t.y1, max(t.y2, t.y3));
-	
-	if (minx>=0 && maxx<4096 && miny>0 && maxy<4096) {
-		t.integral = pixels[minx+miny*4096] + pixels[maxx+maxy*4096] - pixels[minx+maxy*4096] - pixels[maxx+miny*4096];
-		t.hasIntegral = true;
-		return true;
-	}
-	return false;
-}
-
-
-void testApp::drawTriangles(FractalTriangle& t) {
-
-	if (t.l == depth) {
-		
-		if (t.hasIntegral) {
-			ofFill();
-				float c = t.integral / 20.0;
-				glBegin(GL_TRIANGLES);
-				glColor4f(c, c, c, 1.1); glVertex2d(t.x1, t.y1);
-				glColor4f(c, c, c, 1.1); glVertex2d(t.x2, t.y2);
-				glColor4f(c, c, c, 1.1); glVertex2d(t.x3, t.y3);
-				glEnd();
-		}		
-	}
-	else {
-		drawTriangles(*t.t1);
-		drawTriangles(*t.t2);
-		drawTriangles(*t.t3);
-		drawTriangles(*t.t4);
-	}
+	int i0 = p[x1+y1*4096]+p[x2+y2*4096]-p[x1+y2*4096]-p[x2+y1*4096];
+	int i1 = p[x2+y1*4096]+p[x3+y2*4096]-p[x2+y2*4096]-p[x3+y1*4096];
+	int i2 = p[x1+y2*4096]+p[x2+y3*4096]-p[x1+y3*4096]-p[x2+y2*4096];
+	int i3 = p[x2+y2*4096]+p[x3+y3*4096]-p[x2+y3*4096]-p[x3+y2*4096];
+	ofRectangle r0(x1, y1, size, size);
+	ofRectangle r1(x2, y1, size, size);
+	ofRectangle r2(x1, y2, size, size);
+	ofRectangle r3(x2, y2, size, size);
+	if(i0) { if (i0 >= 8) splitRect(r0); else { rects.push_back(r0); integrals.push_back(i0); }}
+	if(i1) { if (i1 >= 8) splitRect(r1); else { rects.push_back(r1); integrals.push_back(i1); }}
+	if(i2) { if (i2 >= 8) splitRect(r2); else { rects.push_back(r2); integrals.push_back(i2); }}
+	if(i3) { if (i3 >= 8) splitRect(r3); else { rects.push_back(r3); integrals.push_back(i3); }}
 }
 
 void testApp::exit() {
-	delete triangle;
 }
 
 //--------------------------------------------------------------
@@ -146,10 +134,14 @@ void testApp::update() {
 
 //--------------------------------------------------------------
 void testApp::draw() {
-	ofSetColor(255);
+	ofSetHexColor(0xFFFFFF);
 	ofScale(0.25,0.25);
-	drawTriangles(*triangle);
-	//img.draw(0,0,ofGetWidth(), ofGetHeight());
+	//img.draw(0,0);
+
+	for(int i=0; i<rects.size(); i++) {
+		ofSetHexColor(integrals[i]*10000/rects[i].width/rects[i].width);
+		ofRect(rects[i]);
+	}
 }
 
 

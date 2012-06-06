@@ -3,7 +3,7 @@
 
 
 #include "ofMain.h"
-#include "FractalTriangle.h"
+#include "ofxJSONElement.h"
 
 class testApp : public ofBaseApp {
 	
@@ -30,15 +30,11 @@ class testApp : public ofBaseApp {
 		vector<ofPoint> points;
 		ofImage img;
 
-		bool getIntegralFromTriangle(FractalTriangle& t);
-		void splitTriangles(FractalTriangle& t);
-		void drawTriangles(FractalTriangle& t);
-
-		vector<FractalTriangle> triangles;
-
-		FractalTriangle* triangle;
-		unsigned int depth;
-
+		vector<ofRectangle> rects;
+		vector<int>         integrals;
+		void splitRect(ofRectangle rect);
+		
+		ofxJSONElement json;
 	
 };
 
