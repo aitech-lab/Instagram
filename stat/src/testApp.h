@@ -26,14 +26,19 @@ class testApp : public ofBaseApp {
 		double min_lng;
 		double max_lat;
 		double max_lng;
+		double lat_s; 
+		double lng_s; 
+
 
 		vector<ofPoint> points;
 		ofImage img;
 
 		vector<ofRectangle> rects;
 		vector<int>         integrals;
-		void splitRect(ofRectangle rect);
 		
+		void splitRect(ofRectangle rect);
+		void exportRectsAsJson(string name="stat");
+		void exportLevelsAsJson();
 		ofxJSONElement json;
 	
 };

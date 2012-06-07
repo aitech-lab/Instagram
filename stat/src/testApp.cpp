@@ -28,20 +28,21 @@ void testApp::setup(){
 		}
 	}
 	
-	img     .allocate(4096, 4096,OF_IMAGE_COLOR_ALPHA);
+	img.allocate(4096, 4096,OF_IMAGE_COLOR_ALPHA);
 	unsigned int* p1 = (unsigned int*) img.getPixels();
 	memset(p1, 0 , 4096*4096*4);
 	
-	float lat_s = 4095.0/(max_lat - min_lat);
-	float lng_s = 4095.0/(max_lng - min_lng);
+	lat_s = 4095.0/(max_lat - min_lat);
+	lng_s = 4095.0/(max_lng - min_lng);
 	for (int i=0; i<points.size(); i++) {
 		ofPoint& p = points[i];
 		unsigned int px = (p.x-min_lat)*lat_s;
 		unsigned int py = (p.y-min_lng)*lng_s;
 		p1[px+4096*py] += 1;
 	}
-	
-	
+	img.saveImage("map.png");
+
+	// calc integral
 	for(unsigned int i=1; i<4096; i++) {
 		p1[i     ] = p1[ i-1      ] + p1[i     ];
 		p1[i*4096] = p1[(i-1)*4096] + p1[i*4096];
@@ -57,11 +58,43 @@ void testApp::setup(){
 	}
 
 	img.update();
+	//splitRect(ofRectangle(0,0,4096,4096));
+	exportRectsAsJson();
 	
+}
+
+void testApp::exportLevelsAsJson() {
 	
-	splitRect(ofRectangle(0,0,4095,4095));
+	static unsigned int* p = (unsigned int*)img.getPixels();
 	
-	/*	
+	// number of zoom levels
+	for(int pw=3; pw<8; pw++) {
+		unsigned int sp =     1 << pw;
+		unsigned int sz  = 4096 >> pw;
+
+		rects.clear();
+		integrals.clear();
+
+		for (unsigned int j=0; j<sp-1; j++) {
+			for (unsigned int i=0; i<sp-1; i++) {
+				ofRectangle r(i*sz, j*sz, sz, sz);
+				unsigned int integral = 
+					p[  i   *sz   +  j   *sz   *4096]+
+					p[((i+1)*sz-1)+((j+1)*sz-1)*4096]-
+					p[  i   *sz   +((j+1)*sz-1)*4096]-
+					p[((i+1)*sz-1)+  j   *sz   *4096];	
+				rects.push_back(r);
+				integrals.push_back(integral);
+			}
+		}
+
+		exportRectsAsJson("stat-l"+ofToString(9+pw));
+
+	}
+}
+
+void testApp::exportRectsAsJson(string name) {
+	
 	json["type"]="FeatureCollection";
 
 	for(int i=0; i<rects.size(); i++) {
@@ -97,28 +130,29 @@ void testApp::setup(){
 			ofToString(min_lat+ rects[i].x                 /lat_s)+
 			"] ] ]");
 	}
-	json.save("stat.geojson");
-	*/
+	json.save(name+".geojson");
 
 }
 
 void testApp::splitRect(ofRectangle r) {
 	static char min = 4;
-	int size = r.width/2;
+	int size = (int) r.width >> 1;
 	static unsigned int* p = (unsigned int*)img.getPixels();
 	if( r.width < min) return;
 	int x1, x2, x3, y1, y2, y3;
 	x1 = r.x; x2= r.x+size, x3 = r.x+size*2;
 	y1 = r.y; y2= r.y+size, y3 = r.y+size*2;
 
-	int i0 = p[x1+y1*4096]+p[x2+y2*4096]-p[x1+y2*4096]-p[x2+y1*4096];
-	int i1 = p[x2+y1*4096]+p[x3+y2*4096]-p[x2+y2*4096]-p[x3+y1*4096];
-	int i2 = p[x1+y2*4096]+p[x2+y3*4096]-p[x1+y3*4096]-p[x2+y2*4096];
-	int i3 = p[x2+y2*4096]+p[x3+y3*4096]-p[x2+y3*4096]-p[x3+y2*4096];
+	int i0 = p[x1+y1*4096]+p[(x2-1)+(y2-1)*4096]-p[x1+(y2-1)*4096]-p[(x2-1)+y1*4096];
+	int i1 = p[x2+y1*4096]+p[(x3-1)+(y2-1)*4096]-p[x2+(y2-1)*4096]-p[(x3-1)+y1*4096];
+	int i2 = p[x1+y2*4096]+p[(x2-1)+(y3-1)*4096]-p[x1+(y3-1)*4096]-p[(x2-1)+y2*4096];
+	int i3 = p[x2+y2*4096]+p[(x3-1)+(y3-1)*4096]-p[x2+(y3-1)*4096]-p[(x3-1)+y2*4096];
+
 	ofRectangle r0(x1, y1, size, size);
 	ofRectangle r1(x2, y1, size, size);
 	ofRectangle r2(x1, y2, size, size);
 	ofRectangle r3(x2, y2, size, size);
+	
 	if(i0) { if (i0 >= 8) splitRect(r0); else { rects.push_back(r0); integrals.push_back(i0); }}
 	if(i1) { if (i1 >= 8) splitRect(r1); else { rects.push_back(r1); integrals.push_back(i1); }}
 	if(i2) { if (i2 >= 8) splitRect(r2); else { rects.push_back(r2); integrals.push_back(i2); }}
@@ -152,7 +186,9 @@ void testApp::keyPressed  (int key){
 
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){ 
-	
+
+	if (key=='e' || key=='E') exportLevelsAsJson();
+
 }
 
 //--------------------------------------------------------------
