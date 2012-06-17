@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "foursquare", "foursquare.pyproj", "{44BD0A63-0371-4765-9FD8-47E152671121}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "stat-py", "stat-py.pyproj", "{3567F4F0-CA86-4715-875B-0DBFC8859130}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,8 +9,8 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{44BD0A63-0371-4765-9FD8-47E152671121}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44BD0A63-0371-4765-9FD8-47E152671121}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3567F4F0-CA86-4715-875B-0DBFC8859130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3567F4F0-CA86-4715-875B-0DBFC8859130}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
