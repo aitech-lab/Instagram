@@ -39,14 +39,10 @@ def grabPiceOfInstagram(lat, lng, client_id) :
         max_timestamp = t- c   *step
 
         conn = httplib.HTTPSConnection("api.instagram.com")
-        conn.request("GET",          
-            "/v1/media/search"       
-            "?distance="     +distance               +
-            "&client_id="    +client_id              +
-            "&lat="          +lat                    +           
-            "&lng="          +lng                    +           
-            "&min_timestamp="+str(int(min_timestamp))+
-            "&max_timestamp="+str(int(max_timestamp)))
+        url = "/v1/media/search?distance=%s&client_id=%s&lat=%s&lng=%s&min_timestamp=%s&max_timestamp=%s" % (distance, client_id, lat, lng, str(int(min_timestamp)), str(int(max_timestamp)))
+
+        conn.request("GET",  url)        
+
         resp = conn.getresponse()
 
         print resp.status, resp.reason
@@ -65,6 +61,7 @@ def grabPiceOfInstagram(lat, lng, client_id) :
                 )
             c+=1
         else :
+            print "https://api.instagram.com%s" % url
             time.sleep(1)
 
 
